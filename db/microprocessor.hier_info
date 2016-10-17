@@ -1,0 +1,33 @@
+|microprocessor
+clk => slow_clock.CLK
+clk => slow_count[0].CLK
+clk => slow_count[1].CLK
+clk => slow_count[2].CLK
+clk => slow_count[3].CLK
+clk => slow_count[4].CLK
+clk => slow_count[5].CLK
+clk => slow_count[6].CLK
+clk => slow_count[7].CLK
+clk => slow_count[8].CLK
+clk => slow_count[9].CLK
+clk => slow_count[10].CLK
+clk => slow_count[11].CLK
+clk => slow_count[12].CLK
+clk => slow_count[13].CLK
+clk => slow_count[14].CLK
+clk => slow_count[15].CLK
+clk => slow_count[16].CLK
+clk => slow_count[17].CLK
+clk => slow_count[18].CLK
+clk => slow_count[19].CLK
+clk => slow_count[20].CLK
+clk => slow_count[21].CLK
+clk => slow_count[22].CLK
+clk => slow_count[23].CLK
+clk => slow_count[24].CLK
+clk => slow_count[25].CLK
+clk => slow_count[26].CLK
+rst => current_fase~3.DATAIN
+clk_led <= slow_clock.DB_MAX_OUTPUT_PORT_TYPE
+
+
