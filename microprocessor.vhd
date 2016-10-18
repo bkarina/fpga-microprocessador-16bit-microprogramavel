@@ -16,59 +16,52 @@ architecture behavior of microprocessor is
 	-- definicao de tipos da memoria
 	type MEM_ROM is array (0 to 4096-1) of std_logic_vector(15 downto 0 );
 	type MEM_MICRO is array (0 to 1024-1) of std_logic_vector(23 downto 0 );
-	
-	-- type MEM_FILE is array (0 to 15) of std_logic_vector(7 downto 0 );
 
+	-- Barramentos externos 1_2 (ULA)
+	signal BUS_ULA1: std_logic_vector(15 downto 0);
+	signal BUS_ULA2: std_logic_vector(15 downto 0);
+	
 	-- ROM: armazena as instrucoes (op|ra|rb|rd)
 	signal ROM: MEM_ROM;
 
 	signal MIC_MEM: MEM_MICRO;
 
-	-- registrador de arquivo : env
-	--signal RF : MEM_FILE;
-
 	-- contador de programa
-	signal PC			: integer range 0 to 4096-1 := 0;
+	--signal PC			: integer range 0 to 4096-1 := 0;
+	signal PC :	std_logic_vector (15 downto 0);
+	
+	-- contador de microprograma
 	signal MPC			: integer range 0 to 1024-1 := 0;
-	
-	--signal PC_temp		: integer range 0 to 255;
-	--signal PC_return	: std_logic;
-	
+		
 	-- registrador de instrucao: armazena instrucao que vem do PC
 	signal MIR: std_logic_vector(24 downto 1);
 	signal IR: std_logic_vector(15 downto 0);
 
+	-- registrador de memoria 
+	signal RDM : std_logic_vector (15 downto 0);
+	
 	-- sinais decodificacao
 	signal opcode	: std_logic_vector (3 downto 0);
 	
 	signal R1		: std_logic_vector (15 downto 0);
 	signal R2		: std_logic_vector (15 downto 0);
 	signal ACC		: std_logic_vector (15 downto 0);
-
 	
 	-- registrador temporario: envia 8bits para a memoria de saida
 	-- signal TMP		: std_logic_vector(7 downto 0);
 
-
-	-- sinal auxiliar para imediatos
-	-- signal imediato: std_logic_vector(7 downto 0);
-
-
 	-- sinal de controle para desligar micro	
 	 signal halted	: std_logic;
-
 
 	-- signal auxilar para clock
 	signal slow_clock: std_logic;
 	signal slow_count: integer range 0 to 133333334 := 0;
-
 
 	-- signal auxiliar reset
 	signal reset_all : std_logic := '0';
 	
 	-- signal de controle principal
 	signal SC :	std_logic_vector (24 downto 1);	
-
 
 	-- maquina de moore (FSM)	
 	type type_fase is (f_1, f_2, f_3, f_4, f_5); -- Fases da microprogramação
@@ -77,7 +70,6 @@ architecture behavior of microprocessor is
 
 begin
 		
-
 -- Process para dividir o clock, necessário para a visualização das etapas.
 slow_clock_process:
 			process(clk)
@@ -179,24 +171,54 @@ output_process:
 							 
 							 end if;	
 							
+							-- O controle de barramento funciona como a logica do 3state, evitando curto no barramento
+							
+							-- controle do barramento ext1
 							if(SC(1) = '1') then
+
+								BUS_ULA1 <= PC;
+							
+							elsif(SC(2) = '1') then
+								
+								BUS_ULA1 <= ACC;
+							
+							elsif(SC(3) = '1') then
+								
+								BUS_ULA1 <= R1;
+							
 							end if;
 							
-							if(SC(2) = '1') then
-							end if;
-							
-							if(SC(3) = '1') then
-							end if;
-							
+							-- controle do barramento ext2
 							if(SC(4) = '1') then
+								
+								BUS_ULA2 <= R2;
+							
+							elsif(SC(5) = '1') then
+								
+								BUS_ULA2 <= "0000000000000001";
+					
+							elsif(SC(6) = '1') then
+							
+								BUS_ULA2(15 downto 12)  <= "0000";
+								BUS_ULA2(11 downto 0)   <= IR(11 downto 0);
+								
+							elsif(SC(7) = '1') then
+							
+								BUS_ULA2 <= RDM;
+							
 							end if;
 							
-							if(SC(5) = '1') then
+							
+							
+							if(SC(8) = '1') then
+							end if;
+							
+							if(SC(9) = '1') then
 							end if;
 						
 				-- FASE 2
 						when f_2  	=>	
-							if(SC(1) = '1') then
+							if(SC(10) = '1') then
 							end if;
 							
 				-- FASE 3
