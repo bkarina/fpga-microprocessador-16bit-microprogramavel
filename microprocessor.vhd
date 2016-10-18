@@ -17,9 +17,11 @@ architecture behavior of microprocessor is
 	type MEM_ROM is array (0 to 4096-1) of std_logic_vector(15 downto 0 );
 	type MEM_MICRO is array (0 to 1024-1) of std_logic_vector(23 downto 0 );
 
-	-- Barramentos externos 1_2 (ULA)
+	-- Barramentos externos 1_2 (ULA) e 3
 	signal BUS_ULA1: std_logic_vector(15 downto 0);
 	signal BUS_ULA2: std_logic_vector(15 downto 0);
+	
+	signal BUS_EXT3: std_logic_vector (15 downto 0);
 	
 	-- ROM: armazena as instrucoes (op|ra|rb|rd)
 	signal ROM: MEM_ROM;
@@ -103,7 +105,6 @@ fase_update:
 
 -- 	Process para trocar as fase do microprogramado
 fase_change:
-
 			process (current_fase)			
 			begin
 				-- caso seja loop interno do microporograma
@@ -172,7 +173,6 @@ output_process:
 							 end if;	
 							
 							-- O controle de barramento funciona como a logica do 3state, evitando curto no barramento
-							
 							-- controle do barramento ext1
 							if(SC(1) = '1') then
 
@@ -209,11 +209,25 @@ output_process:
 							end if;
 							
 							
-							
+							-- logica da ULA: ----------------------------
+							----------------------------------------------
+							-- SC 8 : BUS3 <- (BUS1)-(BUS 2)				  --
+							-- SC 9 : BUS3 <- SHIFT LEFT((BUS1)-(BUS 2))--
+							----------------------------------------------
+			
 							if(SC(8) = '1') then
-							end if;
+								
+								BUS_EXT3 <= BUS_ULA1 - BUS_ULA2;
 							
-							if(SC(9) = '1') then
+							elsif(SC(9) = '1') then
+								
+								BUS_EXT3 <= (BUS_ULA1(14 downto 0) + BUS_ULA2(14 downto 0)) & '0';
+								
+							
+							else
+								
+								BUS_EXT3 <= BUS_ULA1 + BUS_ULA2;
+							
 							end if;
 						
 				-- FASE 2
