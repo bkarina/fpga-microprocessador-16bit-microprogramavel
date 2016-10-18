@@ -1,5 +1,5 @@
 Assembler report for microprocessor
-Sun Oct 16 18:19:00 2016
+Tue Oct 18 10:07:53 2016
 Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
 
 
@@ -10,7 +10,7 @@ Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
   2. Assembler Summary
   3. Assembler Settings
   4. Assembler Generated Files
-  5. Assembler Device Options: C:/altera_lite/15.1/Microprocessor/14-10-2016/output_files/microprocessor.sof
+  5. Assembler Device Options: C:/altera_lite/15.1/Microprocessor/17-10-2016/output_files/microprocessor.sof
   6. Assembler Messages
 
 
@@ -38,7 +38,7 @@ agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Sun Oct 16 18:19:00 2016 ;
+; Assembler Status      ; Successful - Tue Oct 18 10:07:53 2016 ;
 ; Revision Name         ; microprocessor                        ;
 ; Top-level Entity Name ; microprocessor                        ;
 ; Family                ; Cyclone IV E                          ;
@@ -58,12 +58,12 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; File Name                                                                     ;
 +-------------------------------------------------------------------------------+
-; C:/altera_lite/15.1/Microprocessor/14-10-2016/output_files/microprocessor.sof ;
+; C:/altera_lite/15.1/Microprocessor/17-10-2016/output_files/microprocessor.sof ;
 +-------------------------------------------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------+
-; Assembler Device Options: C:/altera_lite/15.1/Microprocessor/14-10-2016/output_files/microprocessor.sof ;
+; Assembler Device Options: C:/altera_lite/15.1/Microprocessor/17-10-2016/output_files/microprocessor.sof ;
 +----------------+----------------------------------------------------------------------------------------+
 ; Option         ; Setting                                                                                ;
 +----------------+----------------------------------------------------------------------------------------+
@@ -79,14 +79,14 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
-    Info: Processing started: Sun Oct 16 18:18:49 2016
+    Info: Processing started: Tue Oct 18 10:07:41 2016
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off microprocessor -c microprocessor
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 711 megabytes
-    Info: Processing ended: Sun Oct 16 18:19:00 2016
-    Info: Elapsed time: 00:00:11
+    Info: Processing ended: Tue Oct 18 10:07:53 2016
+    Info: Elapsed time: 00:00:12
     Info: Total CPU time (on all processors): 00:00:10
 
 

@@ -28,13 +28,15 @@ architecture behavior of microprocessor is
 	--signal RF : MEM_FILE;
 
 	-- contador de programa
-	signal PC			: integer range 0 to 255 := 0;
+	signal PC			: integer range 0 to 4096-1 := 0;
+	signal MPC			: integer range 0 to 1024-1 := 0;
+	
 	--signal PC_temp		: integer range 0 to 255;
 	--signal PC_return	: std_logic;
 	
 	-- registrador de instrucao: armazena instrucao que vem do PC
 	signal MIR: std_logic_vector(24 downto 1);
-	signal MIR: std_logic_vector(15 downto 0);
+	signal IR: std_logic_vector(15 downto 0);
 
 	-- sinais decodificacao
 	signal opcode	: std_logic_vector (3 downto 0);
@@ -54,7 +56,6 @@ architecture behavior of microprocessor is
 
 	-- sinal de controle para desligar micro	
 	 signal halted	: std_logic;
-
 
 
 	-- signal auxilar para clock
@@ -106,7 +107,6 @@ fase_update:
 					current_fase <= next_fase;
 				 end if;
 			end process;
-
 
 
 -- 	Process para trocar as fase do microprogramado
@@ -175,7 +175,7 @@ output_process:
 							 -- atualiza o registrador de instrução com o valor do pc
 							 elsif slow_clock'event and slow_clock = '1' then    
 							
-								MIR <= MIC_MEM(PC);
+								MIR <= MIC_MEM(MPC);
 							 
 							 end if;	
 							
