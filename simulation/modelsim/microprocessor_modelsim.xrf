@@ -1,10 +1,10 @@
 vendor_name = ModelSim
-source_file = 1, C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd
+source_file = 1, C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd
 source_file = 1, c:/altera_lite/15.1/quartus/libraries/vhdl/ieee/prmtvs_b.vhd
 source_file = 1, c:/altera_lite/15.1/quartus/libraries/vhdl/ieee/prmtvs_p.vhd
 source_file = 1, c:/altera_lite/15.1/quartus/libraries/vhdl/ieee/timing_b.vhd
 source_file = 1, c:/altera_lite/15.1/quartus/libraries/vhdl/ieee/timing_p.vhd
-source_file = 1, C:/altera_lite/15.1/Microprocessor/17-10-2016/db/microprocessor.cbx.xml
+source_file = 1, C:/altera_lite/15.1/Microprocessor/git/db/microprocessor.cbx.xml
 design_name = microprocessor
 instance = comp, \clk_led~output\, clk_led~output, microprocessor, 1
 instance = comp, \clk~input\, clk~input, microprocessor, 1

@@ -23,8 +23,14 @@ architecture behavior of microprocessor is
 	
 	signal BUS_EXT3: std_logic_vector (15 downto 0);
 	
+	-- Barramentos interno 1_2 (MIC) e 3
+	signal BUS_INT1: std_logic_vector(9 downto 0);
+	signal BUS_INT2: std_logic_vector(9 downto 0);
+	signal BUS_INT3: std_logic_vector(9 downto 0);
+	
+	
 	-- ROM: armazena as instrucoes (op|ra|rb|rd)
-	signal ROM: MEM_ROM;
+	signal PRIN_MEM: MEM_ROM;
 
 	signal MIC_MEM: MEM_MICRO;
 
@@ -33,7 +39,7 @@ architecture behavior of microprocessor is
 	signal PC :	std_logic_vector (15 downto 0);
 	
 	-- contador de microprograma
-	signal MPC			: integer range 0 to 1024-1 := 0;
+	signal MPC :	std_logic_vector (9 downto 0);
 		
 	-- registrador de instrucao: armazena instrucao que vem do PC
 	signal MIR: std_logic_vector(24 downto 1);
@@ -41,6 +47,8 @@ architecture behavior of microprocessor is
 
 	-- registrador de memoria 
 	signal RDM : std_logic_vector (15 downto 0);
+	
+	signal REM1 : std_logic_vector (15 downto 0);
 	
 	-- sinais decodificacao
 	signal opcode	: std_logic_vector (3 downto 0);
@@ -76,32 +84,46 @@ begin
 slow_clock_process:
 			process(clk)
 			begin
+				
 				if (rising_edge(clk)) then
+					
 					slow_count <= slow_count + 1;
+					
 					if (slow_count = 133333333) then
+						
 						slow_count <= 0;
+					
 						slow_clock <= '0';
+					
 					elsif (slow_count = 66666667) then
+					
 						slow_clock <= '1';
+				
 					end if;
+				
 				end if;
+			
 				clk_led <= slow_clock;
+			
 			end process;
-		
-
 
 -- 	Process p atualizar a fase atual com a nova fase, definido pela maquina (fase_change)
 --		Atualiza em cada pulso de clock ou assincrona com reset
 fase_update:
 			process(slow_clock, rst)
 			begin
+				
 				if (rst = '0') then
+				
 					current_fase <= f_1;
+				
 				elsif (slow_clock'event and slow_clock = '1') then
+						
 					current_fase <= next_fase;
+				 
 				 end if;
+			
 			end process;
-
 
 -- 	Process para trocar as fase do microprogramado
 fase_change:
@@ -109,25 +131,31 @@ fase_change:
 			begin
 				-- caso seja loop interno do microporograma
 				if(SC(24) = '1') then
+				
 					next_fase <= f_4;
+				
 				else
+					
 					case current_fase is				
+					
 						when f_1  	=>	next_fase <= f_2;
+			
 						when f_2  	=>	next_fase <= f_3;
-	
-
-	when f_3  	=>	next_fase <= f_4;
+						
+						when f_3  	=>	next_fase <= f_4;
+						
 						when f_4  	=>	next_fase <= f_5;
+						
 						when f_5  	=>	next_fase <= f_1;
+					
 					end case;
+				
 				end if;
 			end process;
-
-
+			
 	----------------------------
 	-- FASE |	Bits (SP)     --
 	----------------------------
-	
 	-- F_1  |		1 a 9		  --
 	-- F_2  |  	  10 a 15     --
 	-- F_3  | 	16, 17, 18    --
@@ -138,9 +166,13 @@ fase_change:
 output_process:
 			process (current_fase, slow_clock, rst)
 			begin
+			
+			
 				case current_fase is
+						
 						when f_1  	=>	
-								if(rst = '0') then
+							
+							if(rst = '0') then
 								
 									reset_all <= '1';
 									
@@ -168,7 +200,7 @@ output_process:
 							 -- atualiza o registrador de instrução com o valor do pc
 							 elsif slow_clock'event and slow_clock = '1' then    
 							
-								MIR <= MIC_MEM(MPC);
+								MIR <= MIC_MEM(to_integer(unsigned(MPC)));
 							 
 							 end if;	
 							
@@ -223,7 +255,6 @@ output_process:
 								
 								BUS_EXT3 <= (BUS_ULA1(14 downto 0) + BUS_ULA2(14 downto 0)) & '0';
 								
-							
 							else
 								
 								BUS_EXT3 <= BUS_ULA1 + BUS_ULA2;
@@ -232,26 +263,132 @@ output_process:
 						
 				-- FASE 2
 						when f_2  	=>	
+							
 							if(SC(10) = '1') then
+									
+								PC <= BUS_EXT3;
+							
 							end if;
 							
+							if(SC(11) = '1') then
+							
+								Acc <= BUS_EXT3;
+							
+							end if;
+							
+							if(SC(12) = '1') then
+							
+								R1 <= BUS_EXT3;
+							
+							end if;
+							
+							if(SC(13) = '1') then
+							
+								R2 <= BUS_EXT3;
+							
+							end if;
+							
+							if(SC(14) = '1') then
+							
+								RDM <= BUS_EXT3;
+							
+							end if;
+							
+							if(SC(15) = '1') then
+								-- contem todo o valor do barramento, porem só utiliza 12bits para o endereco (4k)
+								REM1 <= BUS_EXT3;
+					
+							end if;
+							
+
 				-- FASE 3
-						when f_3  	=>	
-							if(SC(1) = '1') then
+						when f_3  =>
+						
+							if(SC(16) = '1') then
+							
+								RDM <= PRIN_MEM(to_integer(unsigned(REM1(15 downto 4))));
+							
+							elsif (SC(17) = '1') then
+							
+								PRIN_MEM(to_integer(unsigned(REM1(15 downto 4)))) <= RDM;
+							
 							end if;
-				
+
+							if(SC(18) = '1') then
+							
+								IR <= RDM;
+							
+							end if;
+							
+			
 				-- FASE 4
+
 						when f_4  	=>	
-							if(SC(1) = '1') then
+							
+							if(SC(19) = '1') then
+								
+								BUS_INT1 <= "0000000000000001";
+					
+							--TEST ZERO
+							elsif (SC(20) = '1') then
+								-- 1 se (Acc) = 0
+								--	2 se (Acc) != 0
+								if (Acc = "0000000000000000") then
+								
+									BUS_INT1 <= "0000000001";
+								
+								else
+								
+									BUS_INT1 <= "0000000010";
+								
+								end if;
+							
+							--TEST NEG
+							elsif (SC(21) = '1') then
+								-- 1 se (Acc) < 0
+								--	2 se (Acc) >= 0
+								if (Acc < "0000000000000000") then
+							
+									BUS_INT1 <= "0000000001";
+								
+								else
+								
+									BUS_INT1 <= "0000000010";
+								
+								end if;
+								
+							elsif (SC(22) = '1') then
+								
+								BUS_INT1 <= IR(15 downto 12);
+							
 							end if;
+							
+							if (SC(23) = '1') then
+								
+								BUS_INT2 <= MPC;
+							
+							elsif (SC(24) = '1') then
+								
+								BUS_INT2 <= MIR(15 downto 6);
+									
+							end if;
+							
+						-- antes da FASE 5 é necessario atualizar a 'ula' interna
+						BUS_INT3 <= BUs_INT1 + BUS_INT2;
+							
 							
 				-- FASE 5
 						when f_5  	=>
-							if(SC(1) = '1') then
+							
+							-- atualiza mpc com ula interna
+							MPC <= BUS_INT3;
+							
+							if(SC(24) = '1') then
+								MIR <= MIC_MEM(to_integer(unsigned(MPC)));
 							end if;
 								
 				end case;
+				
 			end process;
-			
 						
 end behavior;   

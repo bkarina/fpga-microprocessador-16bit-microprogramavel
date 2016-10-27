@@ -1,5 +1,5 @@
 Analysis & Synthesis report for microprocessor
-Tue Oct 18 10:06:23 2016
+Wed Oct 26 23:09:23 2016
 Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
 
 
@@ -46,7 +46,7 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue Oct 18 10:06:23 2016       ;
+; Analysis & Synthesis Status        ; Successful - Wed Oct 26 23:09:23 2016       ;
 ; Quartus Prime Version              ; 15.1.0 Build 185 10/21/2015 SJ Lite Edition ;
 ; Revision Name                      ; microprocessor                              ;
 ; Top-level Entity Name              ; microprocessor                              ;
@@ -167,13 +167,13 @@ agreement for further details.
 +----------------------------+-------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                            ;
-+----------------------------------+-----------------+-----------------+------------------------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                                     ; Library ;
-+----------------------------------+-----------------+-----------------+------------------------------------------------------------------+---------+
-; microprocessor.vhd               ; yes             ; User VHDL File  ; C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd ;         ;
-+----------------------------------+-----------------+-----------------+------------------------------------------------------------------+---------+
++--------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                     ;
++----------------------------------+-----------------+-----------------+-----------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                              ; Library ;
++----------------------------------+-----------------+-----------------+-----------------------------------------------------------+---------+
+; microprocessor.vhd               ; yes             ; User VHDL File  ; C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd ;         ;
++----------------------------------+-----------------+-----------------+-----------------------------------------------------------+---------+
 
 
 +---------------------------------------------------------+
@@ -297,7 +297,7 @@ Encoding Type:  One-Hot
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:02     ;
+; Top            ; 00:00:01     ;
 +----------------+--------------+
 
 
@@ -307,43 +307,65 @@ Encoding Type:  One-Hot
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
-    Info: Processing started: Tue Oct 18 10:05:53 2016
+    Info: Processing started: Wed Oct 26 23:09:02 2016
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off microprocessor -c microprocessor
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file microprocessor.vhd
-    Info (12022): Found design unit 1: microprocessor-behavior File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 15
-    Info (12023): Found entity 1: microprocessor File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 7
+    Info (12022): Found design unit 1: microprocessor-behavior File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 15
+    Info (12023): Found entity 1: microprocessor File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 7
 Info (12127): Elaborating entity "microprocessor" for the top level hierarchy
-Warning (10540): VHDL Signal Declaration warning at microprocessor.vhd(32): used explicit default value for signal "MPC" because signal was never assigned a value File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 32
-Warning (10036): Verilog HDL or VHDL warning at microprocessor.vhd(38): object "MIR" assigned a value but never read File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 38
-Warning (10036): Verilog HDL or VHDL warning at microprocessor.vhd(67): object "reset_all" assigned a value but never read File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 67
-Warning (10541): VHDL Signal Declaration warning at microprocessor.vhd(70): used implicit default value for signal "SC" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 70
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(94): signal "slow_clock" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 94
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(118): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 118
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(182): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 182
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(185): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 185
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(188): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 188
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(191): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 191
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(194): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 194
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(199): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 199
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(204): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 204
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(209): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 209
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(214): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 214
-Warning (10631): VHDL Process Statement warning at microprocessor.vhd(145): inferring latch(es) for signal or variable "MIC_MEM", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 145
+Warning (10036): Verilog HDL or VHDL warning at microprocessor.vhd(71): object "reset_all" assigned a value but never read File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 71
+Warning (10541): VHDL Signal Declaration warning at microprocessor.vhd(74): used implicit default value for signal "SC" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 74
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(106): signal "slow_clock" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 106
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(133): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 133
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(209): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 209
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(213): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 213
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(217): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 217
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(224): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 224
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(228): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 228
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(232): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 232
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(237): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 237
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(250): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 250
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(254): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 254
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(260): signal "BUS_ULA1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 260
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(260): signal "BUS_ULA2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 260
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(267): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 267
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(273): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 273
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(279): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 279
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(285): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 285
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(291): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 291
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(297): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 297
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(307): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 307
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(311): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 311
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(317): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 317
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(328): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 328
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(333): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 333
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(347): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 347
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(360): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 360
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(366): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 366
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(370): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 370
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(377): signal "BUS_INT1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 377
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(377): signal "BUS_INT2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 377
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(384): signal "BUS_INT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 384
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(386): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 386
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "MIC_MEM", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "BUS_EXT3", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "BUS_INT3", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "MPC", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 5 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 1 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "rst" File: C:/altera_lite/15.1/Microprocessor/17-10-2016/microprocessor.vhd Line: 9
+    Warning (15610): No output dependent on input pin "rst" File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
 Info (21057): Implemented 59 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 2 input pins
     Info (21059): Implemented 1 output pins
     Info (21061): Implemented 56 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 18 warnings
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 40 warnings
     Info: Peak virtual memory: 812 megabytes
-    Info: Processing ended: Tue Oct 18 10:06:23 2016
-    Info: Elapsed time: 00:00:30
-    Info: Total CPU time (on all processors): 00:00:57
+    Info: Processing ended: Wed Oct 26 23:09:23 2016
+    Info: Elapsed time: 00:00:21
+    Info: Total CPU time (on all processors): 00:00:49
 
 
