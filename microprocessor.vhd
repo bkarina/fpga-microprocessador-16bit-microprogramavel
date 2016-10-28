@@ -1,4 +1,11 @@
-library ieee;
+
+
+
+
+
+
+
+	library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
@@ -6,7 +13,8 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity microprocessor is
  port(	clk, rst				 					: in std_logic;
 			clk_led						  			: out std_logic;
-			display_segs6							: out std_logic_vector(6 downto 0)
+		   display_segs1, display_segs2, display_segs3		: out std_logic_vector(6 downto 0);
+			display_segs4, display_segs5, display_segs6		: out std_logic_vector(6 downto 0)
 			);
 end microprocessor;
  
@@ -14,8 +22,8 @@ end microprocessor;
  
 architecture behavior of microprocessor is	 
 	-- definicao de tipos da memoria
-	type MEM_ROM is array (0 to 4096-1) of std_logic_vector(15 downto 0 );
-	type MEM_MICRO is array (0 to 1024-1) of std_logic_vector(24 downto 1 );
+	type MEM_ROM is array (0 to 50-1) of std_logic_vector(15 downto 0 );
+	type MEM_MICRO is array (0 to 50-1) of std_logic_vector(24 downto 1 );
 
 	-- Barramentos externos 1_2 (ULA) e 3
 	signal BUS_ULA1: std_logic_vector(15 downto 0);
@@ -48,14 +56,14 @@ architecture behavior of microprocessor is
 	signal RDM : std_logic_vector (15 downto 0);
 	
 	signal REM1 : std_logic_vector (15 downto 0);
-
-	-- registradores gerais
+	
+	-- registradores de uso geral
 	signal R1		: std_logic_vector (15 downto 0);
 	signal R2		: std_logic_vector (15 downto 0);
 	signal ACC		: std_logic_vector (15 downto 0);
 	
 	-- sinal de controle para desligar micro	
-	signal halted	: std_logic;
+	 signal halted	: std_logic;
 
 	-- signal auxilar para clock
 	signal slow_clock: std_logic;
@@ -71,82 +79,107 @@ architecture behavior of microprocessor is
 	type type_fase is (f_1, f_2, f_3, f_4, f_5); -- Fases da microprogramação
 	signal current_fase, next_fase: type_fase;
 
+	-- display
+	
+	type bcd_num is array (0 to 9) of std_logic_vector(6 downto 0);
+	signal seg_nums : bcd_num := (
+											"0000001", "1001111", "0010010", "0000110", "1001100",
+											"0100100", "1100000", "0001111", "0000000", "0001100");
+					
 
 begin
-		
 		
 -- Process para dividir o clock, necessário para a visualização das etapas.
 slow_clock_process:
 			process(clk)
+			
+			variable slow_count_v: integer range 0 to 133333334 :=  0;
+			variable slow_clock_v: std_logic;
+			
 			begin
+			
+--			slow_count_v := slow_count;
+--			slow_clock_v := slow_clock;
 				
 				if (rising_edge(clk)) then
 					
-					slow_count <= slow_count + 1;
+					slow_count_v := slow_count_v + 1;
 					
-					if (slow_count = 133333333) then
+					if (slow_count_v = 133333333) then
 						
-						slow_count <= 0;
+						slow_count_v := 0;
 					
-						slow_clock <= '0';
+						slow_clock_v := '0';
 					
-					elsif (slow_count = 66666667) then
+					elsif (slow_count_v = 66666667) then
 					
-						slow_clock <= '1';
+						slow_clock_v := '1';
 				
 					end if;
 				
 				end if;
 			
-				clk_led <= slow_clock;
-		
-		
+				clk_led <= slow_clock_v;
+				slow_count <= slow_count_v;
+				slow_clock <= slow_clock_v;
+			
 			end process;
 
 -- 	Process p atualizar a fase atual com a nova fase, definido pela maquina (fase_change)
 --		Atualiza em cada pulso de clock ou assincrona com reset
 fase_update:
 			process(slow_clock, rst)
+			
+			variable current_fase_v: type_fase;
+			
 			begin
 				
 				if (rst = '0') then
 				
-					current_fase <= f_1;
+					current_fase_v := f_1;
 				
 				elsif (slow_clock'event and slow_clock = '1') then
 						
-					current_fase <= next_fase;
+					current_fase_v := next_fase;
 				 
 				 end if;
+			
+			current_fase <= current_fase_v;
 			
 			end process;
 
 -- 	Process para trocar as fase do microprogramado
 fase_change:
-			process (current_fase)			
+			process (current_fase)	
+	
+			variable next_fase_v: type_fase;
+			
 			begin
 				-- caso seja loop interno do microporograma
-				if(SC(24) = '1' and not(current_fase = f_4 or current_fase = f_5)) then
+				if(SC(24) = '1' and not(current_fase = f_4) and not(current_fase = f_5)) then
 				
-					next_fase <= f_4;
+					next_fase_v := f_4;
 				
 				else
 					
 					case current_fase is				
 					
-						when f_1  	=>	next_fase <= f_2;
+						when f_1  	=>	next_fase_v := f_2;
 			
-						when f_2  	=>	next_fase <= f_3;
+						when f_2  	=>	next_fase_v := f_3;
 						
-						when f_3  	=>	next_fase <= f_4;
+						when f_3  	=>	next_fase_v := f_4;
 						
-						when f_4  	=>	next_fase <= f_5;
+						when f_4  	=>	next_fase_v := f_5;
 						
-						when f_5  	=>	next_fase <= f_1;
+						when f_5  	=>	next_fase_v := f_1;
 					
 					end case;
 				
 				end if;
+				
+				next_fase <= next_fase_v;
+				
 			end process;
 			
 	----------------------------
@@ -161,8 +194,47 @@ fase_change:
 				
 output_process:
 			process (current_fase, slow_clock, rst)
-			begin
 			
+			-- Barramentos externos
+			variable BUS_ULA1_v: std_logic_vector(15 downto 0);
+			variable BUS_ULA2_v: std_logic_vector(15 downto 0);
+			variable BUS_EXT3_v: std_logic_vector (15 downto 0);
+	
+			-- Barramentos internos
+			variable BUS_INT1_v: std_logic_vector(9 downto 0);
+			variable BUS_INT2_v: std_logic_vector(9 downto 0);
+			variable BUS_INT3_v: std_logic_vector(9 downto 0);
+			
+			
+			-- Mems
+			variable PRIN_MEM_v: MEM_ROM;
+			variable MIC_MEM_v: MEM_MICRO;
+		
+			-- contador de programa
+			variable PC_v :	std_logic_vector (15 downto 0);
+			
+			-- contador de microprograma
+			variable MPC_v :	std_logic_vector (9 downto 0);
+				
+			-- registrador de instrucao: armazena instrucao que vem do PC
+			variable IR_v: std_logic_vector(15 downto 0);
+		
+			-- registradores de memoria 
+			variable RDM_v : std_logic_vector (15 downto 0);
+			variable REM1_v : std_logic_vector (15 downto 0);
+			
+			-- registradores de uso geral
+			variable R1_v		: std_logic_vector (15 downto 0);
+			variable R2_v		: std_logic_vector (15 downto 0);
+			variable ACC_v	: std_logic_vector (15 downto 0);
+			
+			-- signal auxiliar reset
+			variable reset_all_v : std_logic := '0';
+	
+			-- signal de controle principal
+			variable SC_v :	std_logic_vector (24 downto 1);
+			
+			begin			
 			
 				case current_fase is
 						
@@ -170,65 +242,64 @@ output_process:
 							
 							if(rst = '0') then
 								
-									reset_all <= '1';
+									reset_all_v := '1';
 									
 									-- busca --
-									 MIC_MEM(0)      <= "010001001100000000000001";
-									 MIC_MEM(1)      <= "011000100000001000010001";
+									 MIC_MEM_v(0)      := "010001001100000000000001";
+									 MIC_MEM_v(1)      := "011000100000001000010001";
 									 
 									 -- mapeamento --
-									 MIC_MEM(2)      <= "100000000000001101000000"; -- jump LOAD
-									 MIC_MEM(3)      <= "100000000000001011000000"; -- jump STORE
-									 MIC_MEM(4)      <= "100000000000001111000000"; -- jump ADD
+									 MIC_MEM_v(2)      := "100000000000001101000000"; -- jump LOAD
+									 MIC_MEM_v(3)      := "100000000000001011000000"; -- jump STORE
+									 MIC_MEM_v(4)      := "100000000000001111000000"; -- jump ADD
 									 
-									 -- LOAD --
-									 MIC_MEM(11)     <= "010001001100000000100000";
-									 MIC_MEM(12)     <= "000000000000010001000000";
+									 -- LOAD --:=
+									 MIC_MEM_v(11)     := "010001001100000000100000";
+									 MIC_MEM_v(12)     := "000000000000010001000000";
 									 
-									 -- STORE --
-									 MIC_MEM(13)     <= "010001000100000000100000";
-									 MIC_MEM(14)     <= "000000010010000000000010";
+									 -- STORE --:=
+									 MIC_MEM_v(13)     := "010001000100000000100000";
+									 MIC_MEM_v(14)     := "000000010010000000000010";
 									 
-									 -- ADD --
-									 MIC_MEM(15)     <= "010001001100000000100000";					 
-									 MIC_MEM(16)     <= "000000000000010001000010";
-							 
+									 -- ADD --:=
+									 MIC_MEM_v(15)     := "010001001100000000100000";					 
+									 MIC_MEM_v(16)     := "000000000000010001000010";
 							 
 							 end if;	
 							
 							-- O controle de barramento funciona como a logica do 3state, evitando curto no barramento
 							-- controle do barramento ext1
-							if(SC(1) = '1') then
+							if(SC_v(1) = '1') then
 
-								BUS_ULA1 <= PC;
+								BUS_ULA1_v := PC_v;
 							
-							elsif(SC(2) = '1') then
+							elsif(SC_v(2)  = '1') then
 								
-								BUS_ULA1 <= ACC;
+								BUS_ULA1_v := ACC_v;
 							
-							elsif(SC(3) = '1') then
+							elsif(SC_v(3)  = '1') then
 								
-								BUS_ULA1 <= R1;
+								BUS_ULA1_v := R1_v;
 							
 							end if;
 							
 							-- controle do barramento ext2
-							if(SC(4) = '1') then
+							if(SC_v(4)  = '1') then
 								
-								BUS_ULA2 <= R2;
+								BUS_ULA2_v := R2_v;
 							
-							elsif(SC(5) = '1') then
+							elsif(SC_v(5) = '1') then
 								
-								BUS_ULA2 <= "0000000000000001";
+								BUS_ULA2_v := "0000000000000001";
 					
-							elsif(SC(6) = '1') then
+							elsif(SC_v(6)  = '1') then
 							
-								BUS_ULA2(15 downto 12)  <= "0000";
-								BUS_ULA2(11 downto 0)   <= IR(11 downto 0);
+								BUS_ULA2_v(15 downto 12)  := "0000";
+								BUS_ULA2_v(11 downto 0)   := IR_v(11 downto 0);
 								
-							elsif(SC(7) = '1') then
+							elsif(SC_v(7)  = '1') then
 							
-								BUS_ULA2 <= RDM;
+								BUS_ULA2_v := RDM_v;
 							
 							end if;
 							
@@ -239,56 +310,56 @@ output_process:
 							-- SC 9 : BUS3 <- SHIFT LEFT((BUS1)-(BUS 2))--
 							----------------------------------------------
 			
-							if(SC(8) = '1') then
+							if(SC_v(8)  = '1') then
 								
-								BUS_EXT3 <= BUS_ULA1 - BUS_ULA2;
+								BUS_EXT3_v := BUS_ULA1_v - BUS_ULA2_v;
 							
-							elsif(SC(9) = '1') then
+							elsif(SC_v(9)  = '1') then
 								
-								BUS_EXT3 <= (BUS_ULA1(14 downto 0) + BUS_ULA2(14 downto 0)) & '0';
+								BUS_EXT3_v := (BUS_ULA1_v(14 downto 0) + BUS_ULA2_v(14 downto 0)) & '0';
 								
 							else
 								
-								BUS_EXT3 <= BUS_ULA1 + BUS_ULA2;
+								BUS_EXT3_v := BUS_ULA1_v + BUS_ULA2_v;
 							
 							end if;
 						
 				-- FASE 2
 						when f_2  	=>	
 							
-							if(SC(10) = '1') then
+							if(SC_v(10)  = '1') then
 									
-								PC <= BUS_EXT3;
+								PC_v := BUS_EXT3_v;
 							
 							end if;
 							
-							if(SC(11) = '1') then
+							if(SC_v(11)  = '1') then
 							
-								Acc <= BUS_EXT3;
-							
-							end if;
-							
-							if(SC(12) = '1') then
-							
-								R1 <= BUS_EXT3;
+								Acc_v := BUS_EXT3_v;
 							
 							end if;
 							
-							if(SC(13) = '1') then
+							if(SC_v(12) = '1') then
 							
-								R2 <= BUS_EXT3;
-							
-							end if;
-							
-							if(SC(14) = '1') then
-							
-								RDM <= BUS_EXT3;
+								R1_v := BUS_EXT3_v;
 							
 							end if;
 							
-							if(SC(15) = '1') then
+							if(SC_v(13)  = '1') then
+							
+								R2_v := BUS_EXT3_v;
+							
+							end if;
+							
+							if(SC_v(14)  = '1') then
+							
+								RDM_v := BUS_EXT3_v;
+							
+							end if;
+							
+							if(SC_v(15)  = '1') then
 								-- contem todo o valor do barramento, porem só utiliza 12bits para o endereco (4k)
-								REM1 <= BUS_EXT3;
+								REM1_v := BUS_EXT3_v;
 					
 							end if;
 							
@@ -296,20 +367,19 @@ output_process:
 				-- FASE 3
 						when f_3  =>
 						
-							if(SC(16) = '1') then
+							if(SC_v(16)  = '1') then
 							
-								RDM <= PRIN_MEM(to_integer(unsigned(REM1(15 downto 4))));
+								RDM_v := PRIN_MEM_v(to_integer(unsigned(REM1_v(15 downto 4))));
 							
-							elsif (SC(17) = '1') then
+							elsif (SC_v(17)  = '1') then
 							
-								PRIN_MEM(to_integer(unsigned(REM1(15 downto 4)))) <= RDM;
+								PRIN_MEM_v(to_integer(unsigned(REM1_v(15 downto 4)))) := RDM_v;
 							
 							end if;
-							
 
-							if(SC(18) = '1') then
+							if(SC_v (18)  = '1') then
 							
-								IR <= RDM;
+								IR_v := RDM_v;
 							
 							end if;
 							
@@ -318,106 +388,127 @@ output_process:
 
 						when f_4  	=>	
 							
-							if(SC(19) = '1') then
+							if(SC_v (19)  = '1') then
 								
-								BUS_INT1 <= "0000000001";
+								BUS_INT1_v := "0000000001";
 					
 							--TEST ZERO
-							elsif (SC(20) = '1') then
+							elsif (SC_v (20)  = '1') then
 								-- 1 se (Acc) = 0
 								--	2 se (Acc) != 0
 								if (Acc = "0000000000000000") then
 								
-									BUS_INT1 <= "0000000001";
+									BUS_INT1_v := "0000000001";
 								
 								else
 								
-									BUS_INT1 <= "0000000010";
+									BUS_INT1_v := "0000000010";
 								
 								end if;
 							
 							--TEST NEG
-							elsif (SC(21) = '1') then
+							elsif (SC_v(21) = '1') then
 								-- 1 se (Acc) < 0
 								--	2 se (Acc) >= 0
 								if (Acc < "0000000000000000") then
 							
-									BUS_INT1 <= "0000000001";
+									BUS_INT1_v := "0000000001";
 								
 								else
 								
-									BUS_INT1 <= "0000000010";
+									BUS_INT1_v := "0000000010";
 								
 								end if;
 								
-							elsif (SC(22) = '1') then
+							elsif (SC_v (22) = '1') then
 								
-								BUS_INT1 <= "000000" & IR(15 downto 12);
+								BUS_INT1_v := "000000" & IR(15 downto 12);
 							
 							end if;
 							
-							if (SC(23) = '1') then
+							if (SC_v (23) = '1') then
 								
-								BUS_INT2 <= MPC;
+								BUS_INT2_v := MPC_v;
 							
-							elsif (SC(24) = '1') then
+							elsif (SC_v (24) = '1') then
 								
-								BUS_INT2 <= SC(15 downto 6);
+								BUS_INT2_v := SC(15 downto 6);
 									
 							end if;
 							
 						-- antes da FASE 5 é necessario atualizar a 'ula' interna
-						BUS_INT3 <= BUs_INT1 + BUS_INT2;
+						BUS_INT3_v := BUs_INT1_v + BUS_INT2_v;
 							
 							
 				-- FASE 5
 						when f_5  	=>
 							
 							-- atualiza mpc com ula interna
-							MPC <= BUS_INT3;
+							MPC_v := BUS_INT3_v;
 							
-							if(SC(24) = '1') then
-								SC <= MIC_MEM(to_integer(unsigned(MPC)));
+							if(SC_v (24) = '1') then
+								SC_v := MIC_MEM_v(to_integer(unsigned(MPC_v)));
 							end if;
 								
-				
-				
-				
-				
-				
-				
-						-- display
-				
-					--	if(MPC = "0000000001") then
-						--	display_segs6 <= "0000001";
-						--elsif(MPC = "0000000011") then
-						--	display_segs6 <= "1001111";
-						--elsif(MPC = "0000000100") then
-						--	display_segs6 <= "0010010";
-						--elsif(MPC = "0000000101") then
-						--	display_segs6 <= "0000110";
-						--elsif(MPC = "0000000110") then
-						--	display_segs6 <= "1001100";
-						--else
-						--	display_segs6 <= "0111000";
-						--end if;
-						
-					--case MPC is				
-					
-						--	when "0000000001" => display_segs6 <= "0000001";
-						--	when "0000000011" => display_segs6 <= "1001111";
-						--	when "0000000100" => display_segs6 <= "0010010";
-						--	when "0000000101" => display_segs6 <= "0000110";
-						--	when "0000000110" => display_segs6 <= "1001100";
-						--	when 		  OTHERS => display_segs6 <= "0111000";	
-					--	end case;
-							
-				
-						
-				
-				
 				end case;
 				
-			end process;
+			 -- Barramentos externos
+			 BUS_ULA1 <= BUS_ULA1_v;
+			 BUS_ULA2 <= BUS_ULA2_v;
+			 BUS_EXT3 <= BUS_EXT3_v; 
+	
+			 -- Barramentos internos
+			 BUS_INT1 <= BUS_INT1_v;
+			 BUS_INT2 <= BUS_INT2_v;
+			 BUS_INT3 <= BUS_INT3_v;
+			
+			
+			 -- Mems
+			 PRIN_MEM <= PRIN_MEM_v;
+			 MIC_MEM <= MIC_MEM_v;
 		
-end behavior;
+			 -- contador de programa
+			 PC <= PC_v;
+			
+			 -- contador de microprograma
+			 MPC <= MPC_v;
+			
+			 -- registrador de instrucao: armazena instrucao que vem do PC
+			 IR <= IR_v;
+		
+			 -- registradores de memoria 
+			 RDM <= RDM_v;
+			 REM1 <= REM1_v;
+			
+			 -- registradores de uso geral
+			 R1	 <= R1_v;
+			 R2	 <= R2_v;
+			 ACC <= ACC_v;
+			
+			 -- signal auxiliar reset
+			 reset_all <= reset_all_v;
+	
+			 -- signal de controle principal
+			 SC <= SC_v;
+				
+			end process;
+										 
+			display_segs1 <= seg_nums(to_integer(unsigned(MPC)));
+			display_segs2 <= seg_nums(to_integer(unsignedx'(IR(15 downto 12))));
+			display_segs3 <= seg_nums(3);
+			display_segs4 <= seg_nums(4);
+			display_segs5 <= seg_nums(5);
+			display_segs6 <= seg_nums(6);
+					
+																	
+  						
+end behavior;   
+
+
+
+
+
+						
+		
+			  
+		

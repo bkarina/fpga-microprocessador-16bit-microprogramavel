@@ -2,40 +2,604 @@
 TimeQuest Timing Analyzer Summary
 ------------------------------------------------------------
 
+Type  : Slow 1200mV 85C Model Setup 'SC[16]~24'
+Slack : -15.477
+TNS   : -9323.656
+
+Type  : Slow 1200mV 85C Model Setup 'SC[5]~32'
+Slack : -14.536
+TNS   : -182.737
+
+Type  : Slow 1200mV 85C Model Setup 'SC[10]~29'
+Slack : -9.842
+TNS   : -130.605
+
+Type  : Slow 1200mV 85C Model Setup 'SC[11]~28'
+Slack : -9.687
+TNS   : -129.882
+
+Type  : Slow 1200mV 85C Model Setup 'SC[15]~26'
+Slack : -8.651
+TNS   : -48.974
+
+Type  : Slow 1200mV 85C Model Setup '\fase_update:current_fase_v.f_3'
+Slack : -8.223
+TNS   : -3297.953
+
+Type  : Slow 1200mV 85C Model Setup '\fase_update:current_fase_v.f_1'
+Slack : -6.693
+TNS   : -6.693
+
 Type  : Slow 1200mV 85C Model Setup 'clk'
-Slack : -2.928
-TNS   : -54.599
+Slack : -5.857
+TNS   : -90.852
+
+Type  : Slow 1200mV 85C Model Setup '\fase_update:current_fase_v.f_4'
+Slack : -4.164
+TNS   : -21.290
+
+Type  : Slow 1200mV 85C Model Setup '\fase_update:current_fase_v.f_2'
+Slack : -2.668
+TNS   : -53.148
+
+Type  : Slow 1200mV 85C Model Setup 'SC[24]~16'
+Slack : -2.567
+TNS   : -34.540
+
+Type  : Slow 1200mV 85C Model Setup 'SC[1]~31'
+Slack : -1.984
+TNS   : -29.062
+
+Type  : Slow 1200mV 85C Model Setup 'SC[18]~15'
+Slack : -1.670
+TNS   : -15.974
+
+Type  : Slow 1200mV 85C Model Setup 'SC[22]~17'
+Slack : -1.456
+TNS   : -5.538
+
+Type  : Slow 1200mV 85C Model Setup '\fase_update:current_fase_v.f_5'
+Slack : -1.364
+TNS   : -20.593
+
+Type  : Slow 1200mV 85C Model Setup '\slow_clock_process:slow_clock_v'
+Slack : -0.932
+TNS   : -2.833
+
+Type  : Slow 1200mV 85C Model Hold 'SC[16]~24'
+Slack : -0.238
+TNS   : -0.297
+
+Type  : Slow 1200mV 85C Model Hold '\fase_update:current_fase_v.f_2'
+Slack : 0.104
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold '\slow_clock_process:slow_clock_v'
+Slack : 0.152
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold '\fase_update:current_fase_v.f_3'
+Slack : 0.194
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold '\fase_update:current_fase_v.f_5'
+Slack : 0.297
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[24]~16'
+Slack : 0.307
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[18]~15'
+Slack : 0.358
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[5]~32'
+Slack : 0.531
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[1]~31'
+Slack : 0.630
+TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'clk'
-Slack : 0.385
+Slack : 0.632
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[22]~17'
+Slack : 0.806
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[11]~28'
+Slack : 0.862
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[15]~26'
+Slack : 0.914
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'SC[10]~29'
+Slack : 1.099
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold '\fase_update:current_fase_v.f_4'
+Slack : 1.539
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold '\fase_update:current_fase_v.f_1'
+Slack : 1.644
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Recovery 'SC[22]~17'
+Slack : -1.410
+TNS   : -5.153
+
+Type  : Slow 1200mV 85C Model Removal 'SC[22]~17'
+Slack : 0.724
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
 Slack : -3.000
 TNS   : -38.980
 
+Type  : Slow 1200mV 85C Model Minimum Pulse Width '\slow_clock_process:slow_clock_v'
+Slack : -1.285
+TNS   : -6.425
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[16]~24'
+Slack : 0.323
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width '\fase_update:current_fase_v.f_3'
+Slack : 0.377
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width '\fase_update:current_fase_v.f_5'
+Slack : 0.389
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width '\fase_update:current_fase_v.f_2'
+Slack : 0.400
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width '\fase_update:current_fase_v.f_4'
+Slack : 0.406
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[11]~28'
+Slack : 0.420
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[1]~31'
+Slack : 0.439
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[24]~16'
+Slack : 0.449
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[18]~15'
+Slack : 0.455
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[15]~26'
+Slack : 0.457
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[10]~29'
+Slack : 0.469
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[5]~32'
+Slack : 0.471
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SC[22]~17'
+Slack : 0.482
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width '\fase_update:current_fase_v.f_1'
+Slack : 0.486
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'SC[16]~24'
+Slack : -14.312
+TNS   : -8545.360
+
+Type  : Slow 1200mV 0C Model Setup 'SC[5]~32'
+Slack : -13.399
+TNS   : -168.181
+
+Type  : Slow 1200mV 0C Model Setup 'SC[10]~29'
+Slack : -8.850
+TNS   : -117.149
+
+Type  : Slow 1200mV 0C Model Setup 'SC[11]~28'
+Slack : -8.700
+TNS   : -116.618
+
+Type  : Slow 1200mV 0C Model Setup 'SC[15]~26'
+Slack : -7.771
+TNS   : -43.837
+
+Type  : Slow 1200mV 0C Model Setup '\fase_update:current_fase_v.f_3'
+Slack : -7.524
+TNS   : -2958.060
+
+Type  : Slow 1200mV 0C Model Setup '\fase_update:current_fase_v.f_1'
+Slack : -5.985
+TNS   : -5.985
+
 Type  : Slow 1200mV 0C Model Setup 'clk'
-Slack : -2.557
-TNS   : -46.484
+Slack : -5.229
+TNS   : -80.347
+
+Type  : Slow 1200mV 0C Model Setup '\fase_update:current_fase_v.f_4'
+Slack : -3.706
+TNS   : -18.788
+
+Type  : Slow 1200mV 0C Model Setup '\fase_update:current_fase_v.f_2'
+Slack : -2.414
+TNS   : -46.398
+
+Type  : Slow 1200mV 0C Model Setup 'SC[24]~16'
+Slack : -2.280
+TNS   : -30.216
+
+Type  : Slow 1200mV 0C Model Setup 'SC[1]~31'
+Slack : -1.958
+TNS   : -28.860
+
+Type  : Slow 1200mV 0C Model Setup 'SC[18]~15'
+Slack : -1.447
+TNS   : -13.334
+
+Type  : Slow 1200mV 0C Model Setup 'SC[22]~17'
+Slack : -1.259
+TNS   : -4.730
+
+Type  : Slow 1200mV 0C Model Setup '\fase_update:current_fase_v.f_5'
+Slack : -1.183
+TNS   : -16.992
+
+Type  : Slow 1200mV 0C Model Setup '\slow_clock_process:slow_clock_v'
+Slack : -0.772
+TNS   : -2.094
+
+Type  : Slow 1200mV 0C Model Hold 'SC[16]~24'
+Slack : -0.208
+TNS   : -0.259
+
+Type  : Slow 1200mV 0C Model Hold '\fase_update:current_fase_v.f_2'
+Slack : 0.085
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold '\slow_clock_process:slow_clock_v'
+Slack : 0.086
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold '\fase_update:current_fase_v.f_3'
+Slack : 0.171
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold '\fase_update:current_fase_v.f_5'
+Slack : 0.256
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[24]~16'
+Slack : 0.263
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[18]~15'
+Slack : 0.326
+TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'clk'
-Slack : 0.339
+Slack : 0.577
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[1]~31'
+Slack : 0.590
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[5]~32'
+Slack : 0.603
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[22]~17'
+Slack : 0.730
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[11]~28'
+Slack : 0.762
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[15]~26'
+Slack : 0.824
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'SC[10]~29'
+Slack : 0.987
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold '\fase_update:current_fase_v.f_4'
+Slack : 1.372
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold '\fase_update:current_fase_v.f_1'
+Slack : 1.498
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Recovery 'SC[22]~17'
+Slack : -1.206
+TNS   : -4.334
+
+Type  : Slow 1200mV 0C Model Removal 'SC[22]~17'
+Slack : 0.660
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
 Slack : -3.000
 TNS   : -38.980
 
+Type  : Slow 1200mV 0C Model Minimum Pulse Width '\slow_clock_process:slow_clock_v'
+Slack : -1.285
+TNS   : -6.425
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[16]~24'
+Slack : 0.237
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[11]~28'
+Slack : 0.354
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[5]~32'
+Slack : 0.355
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[24]~16'
+Slack : 0.378
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[15]~26'
+Slack : 0.409
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[10]~29'
+Slack : 0.410
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[18]~15'
+Slack : 0.417
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_3'
+Slack : 0.420
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_4'
+Slack : 0.426
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[1]~31'
+Slack : 0.430
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_5'
+Slack : 0.437
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_2'
+Slack : 0.444
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SC[22]~17'
+Slack : 0.446
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_1'
+Slack : 0.452
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'SC[16]~24'
+Slack : -8.152
+TNS   : -4769.561
+
+Type  : Fast 1200mV 0C Model Setup 'SC[5]~32'
+Slack : -7.340
+TNS   : -88.481
+
+Type  : Fast 1200mV 0C Model Setup 'SC[10]~29'
+Slack : -4.622
+TNS   : -59.210
+
+Type  : Fast 1200mV 0C Model Setup 'SC[11]~28'
+Slack : -4.512
+TNS   : -58.643
+
+Type  : Fast 1200mV 0C Model Setup '\fase_update:current_fase_v.f_3'
+Slack : -4.067
+TNS   : -1449.878
+
+Type  : Fast 1200mV 0C Model Setup 'SC[15]~26'
+Slack : -3.917
+TNS   : -22.048
+
+Type  : Fast 1200mV 0C Model Setup '\fase_update:current_fase_v.f_1'
+Slack : -3.341
+TNS   : -3.341
+
 Type  : Fast 1200mV 0C Model Setup 'clk'
-Slack : -0.950
-TNS   : -13.285
+Slack : -2.388
+TNS   : -30.291
+
+Type  : Fast 1200mV 0C Model Setup '\fase_update:current_fase_v.f_4'
+Slack : -1.593
+TNS   : -7.512
+
+Type  : Fast 1200mV 0C Model Setup '\fase_update:current_fase_v.f_2'
+Slack : -0.898
+TNS   : -12.987
+
+Type  : Fast 1200mV 0C Model Setup 'SC[24]~16'
+Slack : -0.732
+TNS   : -6.366
+
+Type  : Fast 1200mV 0C Model Setup 'SC[1]~31'
+Slack : -0.551
+TNS   : -7.572
+
+Type  : Fast 1200mV 0C Model Setup 'SC[18]~15'
+Slack : -0.338
+TNS   : -1.272
+
+Type  : Fast 1200mV 0C Model Setup 'SC[22]~17'
+Slack : -0.258
+TNS   : -0.886
+
+Type  : Fast 1200mV 0C Model Setup '\slow_clock_process:slow_clock_v'
+Slack : -0.250
+TNS   : -0.736
+
+Type  : Fast 1200mV 0C Model Setup '\fase_update:current_fase_v.f_5'
+Slack : -0.192
+TNS   : -0.475
+
+Type  : Fast 1200mV 0C Model Hold 'SC[16]~24'
+Slack : -0.188
+TNS   : -0.315
+
+Type  : Fast 1200mV 0C Model Hold '\fase_update:current_fase_v.f_2'
+Slack : 0.006
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold '\fase_update:current_fase_v.f_3'
+Slack : 0.032
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold '\slow_clock_process:slow_clock_v'
+Slack : 0.108
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold '\fase_update:current_fase_v.f_5'
+Slack : 0.122
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[24]~16'
+Slack : 0.141
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[18]~15'
+Slack : 0.161
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[1]~31'
+Slack : 0.209
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[5]~32'
+Slack : 0.263
+TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'clk'
-Slack : 0.173
+Slack : 0.287
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[11]~28'
+Slack : 0.352
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[15]~26'
+Slack : 0.381
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[22]~17'
+Slack : 0.433
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SC[10]~29'
+Slack : 0.515
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold '\fase_update:current_fase_v.f_4'
+Slack : 0.729
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold '\fase_update:current_fase_v.f_1'
+Slack : 1.163
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Recovery 'SC[22]~17'
+Slack : -0.198
+TNS   : -0.536
+
+Type  : Fast 1200mV 0C Model Removal 'SC[22]~17'
+Slack : 0.355
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
 Slack : -3.000
-TNS   : -32.848
+TNS   : -32.790
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width '\slow_clock_process:slow_clock_v'
+Slack : -1.000
+TNS   : -5.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[16]~24'
+Slack : 0.288
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_3'
+Slack : 0.309
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[5]~32'
+Slack : 0.316
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_5'
+Slack : 0.330
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[1]~31'
+Slack : 0.338
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_2'
+Slack : 0.389
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_1'
+Slack : 0.393
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[24]~16'
+Slack : 0.401
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[11]~28'
+Slack : 0.407
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[15]~26'
+Slack : 0.413
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[18]~15'
+Slack : 0.414
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width '\fase_update:current_fase_v.f_4'
+Slack : 0.424
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[10]~29'
+Slack : 0.430
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SC[22]~17'
+Slack : 0.446
+TNS   : 0.000
 
 ------------------------------------------------------------
