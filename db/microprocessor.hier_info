@@ -29,5 +29,12 @@ clk => slow_count[25].CLK
 clk => slow_count[26].CLK
 rst => current_fase~3.DATAIN
 clk_led <= slow_clock.DB_MAX_OUTPUT_PORT_TYPE
+display_segs6[0] <= comb.DB_MAX_OUTPUT_PORT_TYPE
+display_segs6[1] <= display_segs6[1].DB_MAX_OUTPUT_PORT_TYPE
+display_segs6[2] <= display_segs6[2].DB_MAX_OUTPUT_PORT_TYPE
+display_segs6[3] <= display_segs6[3].DB_MAX_OUTPUT_PORT_TYPE
+display_segs6[4] <= display_segs6[4].DB_MAX_OUTPUT_PORT_TYPE
+display_segs6[5] <= display_segs6[5].DB_MAX_OUTPUT_PORT_TYPE
+display_segs6[6] <= display_segs6[6].DB_MAX_OUTPUT_PORT_TYPE
 
 

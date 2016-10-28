@@ -3,11 +3,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -------------------------------
-
 entity microprocessor is
-	
-  port(	clk, rst				 					: in std_logic;
-			clk_led						  			: out std_logic);
+ port(	clk, rst				 					: in std_logic;
+			clk_led						  			: out std_logic;
+			display_segs6							: out std_logic_vector(6 downto 0)
+			);
 end microprocessor;
  
 -------------------------------
@@ -15,7 +15,7 @@ end microprocessor;
 architecture behavior of microprocessor is	 
 	-- definicao de tipos da memoria
 	type MEM_ROM is array (0 to 4096-1) of std_logic_vector(15 downto 0 );
-	type MEM_MICRO is array (0 to 1024-1) of std_logic_vector(23 downto 0 );
+	type MEM_MICRO is array (0 to 1024-1) of std_logic_vector(24 downto 1 );
 
 	-- Barramentos externos 1_2 (ULA) e 3
 	signal BUS_ULA1: std_logic_vector(15 downto 0);
@@ -42,26 +42,20 @@ architecture behavior of microprocessor is
 	signal MPC :	std_logic_vector (9 downto 0);
 		
 	-- registrador de instrucao: armazena instrucao que vem do PC
-	signal MIR: std_logic_vector(24 downto 1);
 	signal IR: std_logic_vector(15 downto 0);
 
 	-- registrador de memoria 
 	signal RDM : std_logic_vector (15 downto 0);
 	
 	signal REM1 : std_logic_vector (15 downto 0);
-	
-	-- sinais decodificacao
-	signal opcode	: std_logic_vector (3 downto 0);
-	
+
+	-- registradores gerais
 	signal R1		: std_logic_vector (15 downto 0);
 	signal R2		: std_logic_vector (15 downto 0);
 	signal ACC		: std_logic_vector (15 downto 0);
 	
-	-- registrador temporario: envia 8bits para a memoria de saida
-	-- signal TMP		: std_logic_vector(7 downto 0);
-
 	-- sinal de controle para desligar micro	
-	 signal halted	: std_logic;
+	signal halted	: std_logic;
 
 	-- signal auxilar para clock
 	signal slow_clock: std_logic;
@@ -72,13 +66,14 @@ architecture behavior of microprocessor is
 	
 	-- signal de controle principal
 	signal SC :	std_logic_vector (24 downto 1);	
-
+	
 	-- maquina de moore (FSM)	
 	type type_fase is (f_1, f_2, f_3, f_4, f_5); -- Fases da microprogramação
 	signal current_fase, next_fase: type_fase;
 
 
 begin
+		
 		
 -- Process para dividir o clock, necessário para a visualização das etapas.
 slow_clock_process:
@@ -104,7 +99,8 @@ slow_clock_process:
 				end if;
 			
 				clk_led <= slow_clock;
-			
+		
+		
 			end process;
 
 -- 	Process p atualizar a fase atual com a nova fase, definido pela maquina (fase_change)
@@ -130,7 +126,7 @@ fase_change:
 			process (current_fase)			
 			begin
 				-- caso seja loop interno do microporograma
-				if(SC(24) = '1') then
+				if(SC(24) = '1' and not(current_fase = f_4 or current_fase = f_5)) then
 				
 					next_fase <= f_4;
 				
@@ -177,30 +173,26 @@ output_process:
 									reset_all <= '1';
 									
 									-- busca --
-									 MIC_MEM(0)      <= "100000000000001100100010";
-									 MIC_MEM(1)      <= "100010000100000001000110";
+									 MIC_MEM(0)      <= "010001001100000000000001";
+									 MIC_MEM(1)      <= "011000100000001000010001";
 									 
 									 -- mapeamento --
-									 MIC_MEM(2)      <= "000000101100000000000001"; -- jump LOAD
-									 MIC_MEM(3)      <= "000000110100000000000001"; -- jump STORE
-									 MIC_MEM(4)      <= "000000111100000000000001"; -- jump ADD
+									 MIC_MEM(2)      <= "100000000000001101000000"; -- jump LOAD
+									 MIC_MEM(3)      <= "100000000000001011000000"; -- jump STORE
+									 MIC_MEM(4)      <= "100000000000001111000000"; -- jump ADD
 									 
 									 -- LOAD --
-									 MIC_MEM(11)     <= "000001000000001100100010";
-									 MIC_MEM(12)     <= "000000100010000000000000";
+									 MIC_MEM(11)     <= "010001001100000000100000";
+									 MIC_MEM(12)     <= "000000000000010001000000";
 									 
 									 -- STORE --
-									 MIC_MEM(13)     <= "000001000000001000100010";
-									 MIC_MEM(14)     <= "010000000000010010000000";
+									 MIC_MEM(13)     <= "010001000100000000100000";
+									 MIC_MEM(14)     <= "000000010010000000000010";
 									 
 									 -- ADD --
-									 MIC_MEM(15)     <= "000001000000001100100010";					 
-									 MIC_MEM(16)     <= "010000100010000000000000";
+									 MIC_MEM(15)     <= "010001001100000000100000";					 
+									 MIC_MEM(16)     <= "000000000000010001000010";
 							 
-							 -- atualiza o registrador de instrução com o valor do pc
-							 elsif slow_clock'event and slow_clock = '1' then    
-							
-								MIR <= MIC_MEM(to_integer(unsigned(MPC)));
 							 
 							 end if;	
 							
@@ -313,6 +305,7 @@ output_process:
 								PRIN_MEM(to_integer(unsigned(REM1(15 downto 4)))) <= RDM;
 							
 							end if;
+							
 
 							if(SC(18) = '1') then
 							
@@ -327,7 +320,7 @@ output_process:
 							
 							if(SC(19) = '1') then
 								
-								BUS_INT1 <= "0000000000000001";
+								BUS_INT1 <= "0000000001";
 					
 							--TEST ZERO
 							elsif (SC(20) = '1') then
@@ -359,7 +352,7 @@ output_process:
 								
 							elsif (SC(22) = '1') then
 								
-								BUS_INT1 <= IR(15 downto 12);
+								BUS_INT1 <= "000000" & IR(15 downto 12);
 							
 							end if;
 							
@@ -369,7 +362,7 @@ output_process:
 							
 							elsif (SC(24) = '1') then
 								
-								BUS_INT2 <= MIR(15 downto 6);
+								BUS_INT2 <= SC(15 downto 6);
 									
 							end if;
 							
@@ -384,11 +377,47 @@ output_process:
 							MPC <= BUS_INT3;
 							
 							if(SC(24) = '1') then
-								MIR <= MIC_MEM(to_integer(unsigned(MPC)));
+								SC <= MIC_MEM(to_integer(unsigned(MPC)));
 							end if;
 								
+				
+				
+				
+				
+				
+				
+						-- display
+				
+					--	if(MPC = "0000000001") then
+						--	display_segs6 <= "0000001";
+						--elsif(MPC = "0000000011") then
+						--	display_segs6 <= "1001111";
+						--elsif(MPC = "0000000100") then
+						--	display_segs6 <= "0010010";
+						--elsif(MPC = "0000000101") then
+						--	display_segs6 <= "0000110";
+						--elsif(MPC = "0000000110") then
+						--	display_segs6 <= "1001100";
+						--else
+						--	display_segs6 <= "0111000";
+						--end if;
+						
+					--case MPC is				
+					
+						--	when "0000000001" => display_segs6 <= "0000001";
+						--	when "0000000011" => display_segs6 <= "1001111";
+						--	when "0000000100" => display_segs6 <= "0010010";
+						--	when "0000000101" => display_segs6 <= "0000110";
+						--	when "0000000110" => display_segs6 <= "1001100";
+						--	when 		  OTHERS => display_segs6 <= "0111000";	
+					--	end case;
+							
+				
+						
+				
+				
 				end case;
 				
 			end process;
-						
-end behavior;   
+		
+end behavior;

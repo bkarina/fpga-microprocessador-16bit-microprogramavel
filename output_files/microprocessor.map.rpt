@@ -1,5 +1,5 @@
 Analysis & Synthesis report for microprocessor
-Wed Oct 26 23:09:23 2016
+Thu Oct 27 22:20:06 2016
 Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
 
 
@@ -17,9 +17,10 @@ Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
   9. Registers Removed During Synthesis
  10. Removed Registers Triggering Further Register Optimizations
  11. General Register Statistics
- 12. Post-Synthesis Netlist Statistics for Top Partition
- 13. Elapsed Time Per Partition
- 14. Analysis & Synthesis Messages
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Post-Synthesis Netlist Statistics for Top Partition
+ 14. Elapsed Time Per Partition
+ 15. Analysis & Synthesis Messages
 
 
 
@@ -46,7 +47,7 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Oct 26 23:09:23 2016       ;
+; Analysis & Synthesis Status        ; Successful - Thu Oct 27 22:20:06 2016       ;
 ; Quartus Prime Version              ; 15.1.0 Build 185 10/21/2015 SJ Lite Edition ;
 ; Revision Name                      ; microprocessor                              ;
 ; Top-level Entity Name              ; microprocessor                              ;
@@ -55,7 +56,7 @@ agreement for further details.
 ;     Total combinational functions  ; 56                                          ;
 ;     Dedicated logic registers      ; 28                                          ;
 ; Total registers                    ; 28                                          ;
-; Total pins                         ; 3                                           ;
+; Total pins                         ; 10                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 0                                           ;
 ; Embedded Multiplier 9-bit elements ; 0                                           ;
@@ -197,14 +198,14 @@ agreement for further details.
 ;     -- Dedicated logic registers            ; 28        ;
 ;     -- I/O registers                        ; 0         ;
 ;                                             ;           ;
-; I/O pins                                    ; 3         ;
+; I/O pins                                    ; 10        ;
 ;                                             ;           ;
 ; Embedded Multiplier 9-bit elements          ; 0         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
 ; Maximum fan-out                             ; 28        ;
-; Total fan-out                               ; 198       ;
-; Average fan-out                             ; 2.20      ;
+; Total fan-out                               ; 205       ;
+; Average fan-out                             ; 1.97      ;
 +---------------------------------------------+-----------+
 
 
@@ -213,7 +214,7 @@ agreement for further details.
 +----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
 ; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name ; Library Name ;
 +----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
-; |microprocessor            ; 56 (56)           ; 28 (28)      ; 0           ; 0            ; 0       ; 0         ; 3    ; 0            ; |microprocessor     ; work         ;
+; |microprocessor            ; 56 (56)           ; 28 (28)      ; 0           ; 0            ; 0       ; 0         ; 10   ; 0            ; |microprocessor     ; work         ;
 +----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -270,25 +271,38 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 
 
++--------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output   ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------+
+; 3:1                ; 15 bits   ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; No         ; |microprocessor|BUS_EXT3     ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |microprocessor|BUS_ULA2[15] ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |microprocessor|BUS_ULA2[4]  ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |microprocessor|BUS_ULA1[3]  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------+
+
+
 +-----------------------------------------------------+
 ; Post-Synthesis Netlist Statistics for Top Partition ;
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; boundary_port         ; 3                           ;
+; boundary_port         ; 10                          ;
 ; cycloneiii_ff         ; 28                          ;
 ;     plain             ; 28                          ;
-; cycloneiii_lcell_comb ; 56                          ;
+; cycloneiii_lcell_comb ; 57                          ;
 ;     arith             ; 26                          ;
 ;         2 data inputs ; 26                          ;
-;     normal            ; 30                          ;
+;     normal            ; 31                          ;
+;         0 data inputs ; 1                           ;
 ;         1 data inputs ; 1                           ;
 ;         2 data inputs ; 15                          ;
 ;         3 data inputs ; 1                           ;
 ;         4 data inputs ; 13                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 4.60                        ;
-; Average LUT depth     ; 3.71                        ;
+; Average LUT depth     ; 3.70                        ;
 +-----------------------+-----------------------------+
 
 
@@ -297,7 +311,7 @@ Encoding Type:  One-Hot
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:01     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -307,65 +321,646 @@ Encoding Type:  One-Hot
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
-    Info: Processing started: Wed Oct 26 23:09:02 2016
+    Info: Processing started: Thu Oct 27 22:19:08 2016
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off microprocessor -c microprocessor
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file microprocessor.vhd
     Info (12022): Found design unit 1: microprocessor-behavior File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 15
-    Info (12023): Found entity 1: microprocessor File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 7
+    Info (12023): Found entity 1: microprocessor File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 6
 Info (12127): Elaborating entity "microprocessor" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at microprocessor.vhd(71): object "reset_all" assigned a value but never read File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 71
-Warning (10541): VHDL Signal Declaration warning at microprocessor.vhd(74): used implicit default value for signal "SC" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 74
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(106): signal "slow_clock" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 106
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(133): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 133
+Warning (10541): VHDL Signal Declaration warning at microprocessor.vhd(9): used implicit default value for signal "display_segs6" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
+Warning (10036): Verilog HDL or VHDL warning at microprocessor.vhd(65): object "reset_all" assigned a value but never read File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 65
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(101): signal "slow_clock" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 101
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(129): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 129
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(201): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 201
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(203): signal "PC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 203
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(205): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 205
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(207): signal "ACC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 207
 Warning (10492): VHDL Process Statement warning at microprocessor.vhd(209): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 209
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(213): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 213
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(217): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 217
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(211): signal "R1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 211
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(216): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 216
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(218): signal "R2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 218
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(220): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 220
 Warning (10492): VHDL Process Statement warning at microprocessor.vhd(224): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 224
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(228): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 228
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(232): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 232
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(237): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 237
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(250): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 250
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(254): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 254
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(260): signal "BUS_ULA1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 260
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(260): signal "BUS_ULA2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 260
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(267): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 267
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(273): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 273
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(279): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 279
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(285): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 285
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(291): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 291
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(297): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 297
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(307): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 307
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(311): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 311
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(317): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 317
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(328): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 328
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(333): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 333
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(347): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 347
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(360): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 360
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(366): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 366
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(370): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 370
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(377): signal "BUS_INT1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 377
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(377): signal "BUS_INT2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 377
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(384): signal "BUS_INT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 384
-Warning (10492): VHDL Process Statement warning at microprocessor.vhd(386): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 386
-Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "MIC_MEM", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
-Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "BUS_EXT3", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
-Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "BUS_INT3", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
-Warning (10631): VHDL Process Statement warning at microprocessor.vhd(166): inferring latch(es) for signal or variable "MPC", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 166
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(227): signal "IR" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 227
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(229): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 229
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(231): signal "RDM" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 231
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(242): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 242
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(244): signal "BUS_ULA1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 244
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(244): signal "BUS_ULA2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 244
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(246): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 246
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(248): signal "BUS_ULA1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 248
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(248): signal "BUS_ULA2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 248
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(252): signal "BUS_ULA1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 252
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(252): signal "BUS_ULA2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 252
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(259): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 259
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(261): signal "BUS_EXT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 261
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(265): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 265
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(267): signal "BUS_EXT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 267
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(271): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 271
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(273): signal "BUS_EXT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 273
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(277): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 277
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(279): signal "BUS_EXT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 279
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(283): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 283
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(285): signal "BUS_EXT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 285
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(289): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 289
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(291): signal "BUS_EXT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 291
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(299): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 299
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(301): signal "PRIN_MEM" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 301
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(301): signal "REM1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 301
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(303): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 303
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(305): signal "RDM" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 305
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(305): signal "REM1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 305
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(310): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 310
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(312): signal "RDM" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 312
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(321): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 321
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(326): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 326
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(329): signal "ACC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 329
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(340): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 340
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(343): signal "ACC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 343
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(353): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 353
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(355): signal "IR" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 355
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(359): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 359
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(361): signal "MPC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 361
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(363): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 363
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(365): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 365
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(370): signal "BUS_INT1" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 370
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(370): signal "BUS_INT2" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 370
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(377): signal "BUS_INT3" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 377
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(379): signal "SC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 379
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(380): signal "MIC_MEM" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 380
+Warning (10492): VHDL Process Statement warning at microprocessor.vhd(380): signal "MPC" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 380
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "MIC_MEM", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "BUS_ULA1", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "BUS_ULA2", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "BUS_EXT3", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "PC", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "ACC", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "R1", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "R2", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "RDM", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "REM1", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "IR", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "BUS_INT1", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "BUS_INT2", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "BUS_INT3", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "MPC", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10631): VHDL Process Statement warning at microprocessor.vhd(162): inferring latch(es) for signal or variable "SC", which holds its previous value in one or more paths through the process File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (10873): Using initial value X (don't care) for net "MIC_MEM[5..10]" at microprocessor.vhd(35) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 35
+Warning (10873): Using initial value X (don't care) for net "MIC_MEM[17..1023]" at microprocessor.vhd(35) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 35
+Info (10041): Inferred latch for "SC[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "SC[24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MPC[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT3[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT2[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_INT1[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "IR[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "REM1[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "RDM[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R2[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "R1[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "ACC[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "PC[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_EXT3[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA2[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[0]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "BUS_ULA1[15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[16][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[15][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[14][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[13][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[12][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[11][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[4][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[3][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[2][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[1][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][1]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][2]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][3]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][4]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][5]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][6]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][7]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][8]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][9]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][10]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][11]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][12]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][13]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][14]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][15]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][16]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][17]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][18]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][19]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][20]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][21]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][22]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][23]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Info (10041): Inferred latch for "MIC_MEM[0][24]" at microprocessor.vhd(162) File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[1]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[2]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[3]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[4]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[5]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[6]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[7]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[8]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[9]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[10]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[11]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[12]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[13]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[14]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R2[15]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[1]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[2]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[3]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[4]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[5]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[6]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[7]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[8]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[9]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[10]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[11]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[12]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[13]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[14]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[15]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[0]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[15]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[14]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[13]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[12]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[11]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[10]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[9]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[8]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[7]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[6]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[5]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[4]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[3]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[2]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[1]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (14025): LATCH primitive "R1[0]" is permanently disabled File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 162
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "display_segs6[0]" is stuck at GND File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
+    Warning (13410): Pin "display_segs6[1]" is stuck at GND File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
+    Warning (13410): Pin "display_segs6[2]" is stuck at GND File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
+    Warning (13410): Pin "display_segs6[3]" is stuck at GND File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
+    Warning (13410): Pin "display_segs6[4]" is stuck at GND File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
+    Warning (13410): Pin "display_segs6[5]" is stuck at GND File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
+    Warning (13410): Pin "display_segs6[6]" is stuck at GND File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 5 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 1 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "rst" File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 9
-Info (21057): Implemented 59 device resources after synthesis - the final resource count might be different
+    Warning (15610): No output dependent on input pin "rst" File: C:/altera_lite/15.1/Microprocessor/git/microprocessor.vhd Line: 7
+Info (21057): Implemented 66 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 2 input pins
-    Info (21059): Implemented 1 output pins
+    Info (21059): Implemented 8 output pins
     Info (21061): Implemented 56 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 40 warnings
-    Info: Peak virtual memory: 812 megabytes
-    Info: Processing ended: Wed Oct 26 23:09:23 2016
-    Info: Elapsed time: 00:00:21
-    Info: Total CPU time (on all processors): 00:00:49
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 137 warnings
+    Info: Peak virtual memory: 867 megabytes
+    Info: Processing ended: Thu Oct 27 22:20:06 2016
+    Info: Elapsed time: 00:00:58
+    Info: Total CPU time (on all processors): 00:01:53
 
 
