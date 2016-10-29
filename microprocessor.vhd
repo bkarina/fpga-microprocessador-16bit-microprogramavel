@@ -1,17 +1,10 @@
-
-
-
-
-
-
-
-	library ieee;
+library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -------------------------------
 entity microprocessor is
- port(	clk, rst				 					: in std_logic;
+ port(	clk, rst, debug1, debug2, debug3 					: in std_logic;
 			clk_led						  			: out std_logic;
 		   display_segs1, display_segs2, display_segs3		: out std_logic_vector(6 downto 0);
 			display_segs4, display_segs5, display_segs6		: out std_logic_vector(6 downto 0)
@@ -81,10 +74,11 @@ architecture behavior of microprocessor is
 
 	-- display
 	
-	type bcd_num is array (0 to 9) of std_logic_vector(6 downto 0);
+	type bcd_num is array (0 to 15) of std_logic_vector(6 downto 0);
 	signal seg_nums : bcd_num := (
 											"0000001", "1001111", "0010010", "0000110", "1001100",
-											"0100100", "1100000", "0001111", "0000000", "0001100");
+											"0100100", "1100000", "0001111", "0000000", "0001100",
+											"0001000", "1100000","0110001", "1000010", "0110000", "0111000");
 					
 
 begin
@@ -234,6 +228,8 @@ output_process:
 			-- signal de controle principal
 			variable SC_v :	std_logic_vector (24 downto 1);
 			
+		
+			
 			begin			
 			
 				case current_fase is
@@ -263,8 +259,7 @@ output_process:
 									 
 									 -- ADD --:=
 									 MIC_MEM_v(15)     := "010001001100000000100000";					 
-									 MIC_MEM_v(16)     := "000000000000010001000010";
-					
+									 MIC_MEM_v(16)     := "000000000000010001000010"; 
 									 MIC_MEM_v(5)      := "000000000000000000000000";
 							  		 MIC_MEM_v(6)      := "000000000000000000000000";
 							  		 MIC_MEM_v(7)      := "000000000000000000000000";
@@ -530,25 +525,61 @@ output_process:
 	
 			 -- signal de controle principal
 			 SC <= SC_v;
-				
+
 			end process;
-										 
-			display_segs1 <= seg_nums(to_integer(unsigned(MPC)));
-			display_segs2 <= seg_nums(to_integer(unsignedx'(IR(15 downto 12))));
-			display_segs3 <= seg_nums(3);
-			display_segs4 <= seg_nums(4);
-			display_segs5 <= seg_nums(5);
-			display_segs6 <= seg_nums(6);
+			
+------------------------------------------------ DEBUG PROCESS ---
+			
+			process(clk)
+			-- debug das fases
+			variable debug_fase_v: integer range 1 to 5 :=  1;
+			begin
+				case current_fase is
+						when f_1 => debug_fase_v := 1;
+						when f_2 => debug_fase_v := 2;
+						when f_3 => debug_fase_v := 3;
+						when f_4 => debug_fase_v := 4;
+						when f_5 => debug_fase_v := 5;
+				end case;
+				
+				if		(debug1 = '0') then -- MPC
+				
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(0);
+						display_segs3 <= seg_nums(to_integer(unsigned(MPC(9 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(MPC(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(MPC(3  downto 0 ))));
+							
+				elsif (debug2 = '0') then -- RDM
 					
-																	
-  						
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(to_integer(unsigned(RDM(15 downto 12))));
+						display_segs3 <= seg_nums(to_integer(unsigned(RDM(11 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(RDM(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(RDM(3  downto 0 ))));
+
+				elsif (debug3 = '0') then -- IR
+
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(to_integer(unsigned(IR(15 downto 12))));
+						display_segs3 <= seg_nums(to_integer(unsigned(IR(11 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(IR(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(IR(3  downto 0 ))));
+				
+				else							  -- PC
+					
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(to_integer(unsigned(PC(15 downto 12))));
+						display_segs3 <= seg_nums(to_integer(unsigned(PC(11 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(PC(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(PC(3  downto 0 ))));
+
+				end if;
+			end process;			
+			
+---------------------------------------------------------------------  						
 end behavior;   
-
-
-
-
-
-						
-		
-			  
-		
