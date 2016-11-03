@@ -1,17 +1,10 @@
-
-
-
-
-
-
-
-	library ieee;
+library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -------------------------------
 entity microprocessor is
- port(	clk, rst				 					: in std_logic;
+ port(	clk, rst, debug1, debug2, debug3 					: in std_logic;
 			clk_led						  			: out std_logic;
 		   display_segs1, display_segs2, display_segs3		: out std_logic_vector(6 downto 0);
 			display_segs4, display_segs5, display_segs6		: out std_logic_vector(6 downto 0)
@@ -81,10 +74,11 @@ architecture behavior of microprocessor is
 
 	-- display
 	
-	type bcd_num is array (0 to 9) of std_logic_vector(6 downto 0);
+	type bcd_num is array (0 to 15) of std_logic_vector(6 downto 0);
 	signal seg_nums : bcd_num := (
 											"0000001", "1001111", "0010010", "0000110", "1001100",
-											"0100100", "1100000", "0001111", "0000000", "0001100");
+											"0100100", "1100000", "0001111", "0000000", "0001100",
+											"0001000", "1100000","0110001", "1000010", "0110000", "0111000");
 					
 
 begin
@@ -107,7 +101,7 @@ slow_clock_process:
 					
 					if (slow_count_v = 133333333) then
 						
-						slow_count_v := 0;
+							slow_count_v := 0;
 					
 						slow_clock_v := '0';
 					
@@ -137,10 +131,13 @@ fase_update:
 				if (rst = '0') then
 				
 					current_fase_v := f_1;
+					reset_all <= '1';
+					
 				
 				elsif (slow_clock'event and slow_clock = '1') then
 						
 					current_fase_v := next_fase;
+					reset_all <= '0';
 				 
 				 end if;
 			
@@ -234,19 +231,31 @@ output_process:
 			-- signal de controle principal
 			variable SC_v :	std_logic_vector (24 downto 1);
 			
+		
+			
 			begin			
 			
 				case current_fase is
-						
-						when f_1  	=>	
-							
-							if(rst = '0') then
-								
-									reset_all_v := '1';
 									
+						when f_1  	=>	
+						
+							if(reset_all = '1') then
+
+									 IR_v := x"0000";
+									 MPC_v := "00" & x"00";
+									 PC_v := x"0000";
+									 BUS_ULA1_v :=x"0000";
+									 BUS_ULA2_v :=x"0000";
+									 BUS_EXT3_v :=x"0000";	
+									 BUS_INT1_v := "00" & x"00";
+									 BUS_INT2_v := "00" & x"00";
+									 BUS_INT3_v := "00" & x"00";
+								
 									-- busca --
 									 MIC_MEM_v(0)      := "010001001100000000000001";
 									 MIC_MEM_v(1)      := "011000100000001000010001";
+									 
+									 SC_v := MIC_MEM_v(0);
 									 
 									 -- mapeamento --
 									 MIC_MEM_v(2)      := "100000000000001101000000"; -- jump LOAD
@@ -263,48 +272,100 @@ output_process:
 									 
 									 -- ADD --:=
 									 MIC_MEM_v(15)     := "010001001100000000100000";					 
-									 MIC_MEM_v(16)     := "000000000000010001000010";
-					
+									 MIC_MEM_v(16)     := "000000000000010001000010"; 
 									 MIC_MEM_v(5)      := "000000000000000000000000";
-							  		 MIC_MEM_v(6)      := "000000000000000000000000";
-							  		 MIC_MEM_v(7)      := "000000000000000000000000";
-							  		 MIC_MEM_v(8)      := "000000000000000000000000";
-							  		 MIC_MEM_v(9)      := "000000000000000000000000";
-							  		 MIC_MEM_v(10)     := "000000000000000000000000";
-							  		 MIC_MEM_v(17)     := "000000000000000000000000";
-							  		 MIC_MEM_v(18)     := "000000000000000000000000";
-							  		 MIC_MEM_v(19)     := "000000000000000000000000";
-							  		 MIC_MEM_v(20)     := "000000000000000000000000";
-							  		 MIC_MEM_v(21)     := "000000000000000000000000";
-							  		 MIC_MEM_v(22)     := "000000000000000000000000";
-							  		 MIC_MEM_v(23)     := "000000000000000000000000";
-							  		 MIC_MEM_v(24)     := "000000000000000000000000";
-							  		 MIC_MEM_v(25)     := "000000000000000000000000";
-							  		 MIC_MEM_v(26)     := "000000000000000000000000";
-							  		 MIC_MEM_v(27)     := "000000000000000000000000";
-							  		 MIC_MEM_v(28)     := "000000000000000000000000";
-							  		 MIC_MEM_v(29)     := "000000000000000000000000";
-							  		 MIC_MEM_v(30)     := "000000000000000000000000";
-							  		 MIC_MEM_v(31)     := "000000000000000000000000";
-							  		 MIC_MEM_v(32)     := "000000000000000000000000";
-							  		 MIC_MEM_v(33)     := "000000000000000000000000";
-							  		 MIC_MEM_v(34)     := "000000000000000000000000";
-							  		 MIC_MEM_v(35)     := "000000000000000000000000";
-							  		 MIC_MEM_v(36)     := "000000000000000000000000";
-							  		 MIC_MEM_v(37)     := "000000000000000000000000";
-							  		 MIC_MEM_v(38)     := "000000000000000000000000";
-							  		 MIC_MEM_v(39)     := "000000000000000000000000";
-							  		 MIC_MEM_v(40)     := "000000000000000000000000";
-							  		 MIC_MEM_v(41)     := "000000000000000000000000";
-							  		 MIC_MEM_v(42)     := "000000000000000000000000";
-							  		 MIC_MEM_v(43)     := "000000000000000000000000";
-							  		 MIC_MEM_v(44)     := "000000000000000000000000";
-							  		 MIC_MEM_v(45)     := "000000000000000000000000";
-							  		 MIC_MEM_v(46)     := "000000000000000000000000";
-							  		 MIC_MEM_v(47)     := "000000000000000000000000";
-							  		 MIC_MEM_v(48)     := "000000000000000000000000";
-							  		 MIC_MEM_v(49)     := "000000000000000000000000";
+									 MIC_MEM_v(6)      := "000000000000000000000000";
+									 MIC_MEM_v(7)      := "000000000000000000000000";
+									 MIC_MEM_v(8)      := "000000000000000000000000";
+									 MIC_MEM_v(9)      := "000000000000000000000000";
+									 MIC_MEM_v(10)     := "000000000000000000000000";
+									 MIC_MEM_v(17)     := "000000000000000000000000";
+									 MIC_MEM_v(18)     := "000000000000000000000000";
+									 MIC_MEM_v(19)     := "000000000000000000000000";
+									 MIC_MEM_v(20)     := "000000000000000000000000";
+									 MIC_MEM_v(21)     := "000000000000000000000000";
+									 MIC_MEM_v(22)     := "000000000000000000000000";
+									 MIC_MEM_v(23)     := "000000000000000000000000";
+									 MIC_MEM_v(24)     := "000000000000000000000000";
+									 MIC_MEM_v(25)     := "000000000000000000000000";
+									 MIC_MEM_v(26)     := "000000000000000000000000";
+									 MIC_MEM_v(27)     := "000000000000000000000000";
+									 MIC_MEM_v(28)     := "000000000000000000000000";
+									 MIC_MEM_v(29)     := "000000000000000000000000";
+									 MIC_MEM_v(30)     := "000000000000000000000000";
+									 MIC_MEM_v(31)     := "000000000000000000000000";
+									 MIC_MEM_v(32)     := "000000000000000000000000";
+									 MIC_MEM_v(33)     := "000000000000000000000000";
+									 MIC_MEM_v(34)     := "000000000000000000000000";
+									 MIC_MEM_v(35)     := "000000000000000000000000";
+									 MIC_MEM_v(36)     := "000000000000000000000000";
+									 MIC_MEM_v(37)     := "000000000000000000000000";
+									 MIC_MEM_v(38)     := "000000000000000000000000";
+									 MIC_MEM_v(39)     := "000000000000000000000000";
+									 MIC_MEM_v(40)     := "000000000000000000000000";
+									 MIC_MEM_v(41)     := "000000000000000000000000";
+									 MIC_MEM_v(42)     := "000000000000000000000000";
+									 MIC_MEM_v(43)     := "000000000000000000000000";
+									 MIC_MEM_v(44)     := "000000000000000000000000";
+									 MIC_MEM_v(45)     := "000000000000000000000000";
+									 MIC_MEM_v(46)     := "000000000000000000000000";
+									 MIC_MEM_v(47)     := "000000000000000000000000";
+									 MIC_MEM_v(48)     := "000000000000000000000000";
+									 MIC_MEM_v(49)     := "000000000000000000000000";
 							 
+							 
+									 PRIN_MEM_v(0) := "0001000000001000";
+									 PRIN_MEM_v(1) := "0011000000101000"; 
+									 PRIN_MEM_v(2) := "0010000000001000";	
+									 PRIN_MEM_v(3) := "0000000000000000"; 
+									 PRIN_MEM_v(4) := "0000000000000000"; 
+									 PRIN_MEM_v(5) := "0000000000000000";
+									 PRIN_MEM_v(6) := "0000000000000000";
+									 PRIN_MEM_v(7) := "0000000000000000";
+									 PRIN_MEM_v(8) := "0000000000110000";
+									 PRIN_MEM_v(9) := "0000000000000000";
+									 PRIN_MEM_v(10) := "0000000000000000";
+									 PRIN_MEM_v(11):= "0000000000000000";
+									 PRIN_MEM_v(12):= "0000000000000000";
+									 PRIN_MEM_v(13):= "0000000000000000";
+									 PRIN_MEM_v(14):= "0000000000000000";
+									 PRIN_MEM_v(15):= "0000000000000000";					 
+									 PRIN_MEM_v(16):= "0000000000000000";							 	
+									 PRIN_MEM_v(17) := "0000000000000000";
+									 PRIN_MEM_v(18) := "0000000000000000";
+									 PRIN_MEM_v(19) := "0000000000000000";
+									 PRIN_MEM_v(20) := "0000000000000000";
+									 PRIN_MEM_v(21) := "0000000000000000";
+									 PRIN_MEM_v(22) := "0000000000000000";
+									 PRIN_MEM_v(23) := "0000000000000000";
+									 PRIN_MEM_v(24) := "0000000000000000";
+									 PRIN_MEM_v(25) := "0000000000000000";
+									 PRIN_MEM_v(26) := "0000000000000000";
+									 PRIN_MEM_v(27) := "0000000000000000";
+									 PRIN_MEM_v(28) := "0000000000000000";
+									 PRIN_MEM_v(29) := "0000000000000000";
+									 PRIN_MEM_v(30) := "0000000000000000";
+									 PRIN_MEM_v(31) := "0000000000000000";
+									 PRIN_MEM_v(32) := "0000000000010010";
+									 PRIN_MEM_v(33) := "0000000000000000";
+									 PRIN_MEM_v(34) := "0000000000000000";
+									 PRIN_MEM_v(35) := "0000000000000000";
+									 PRIN_MEM_v(36) := "0000000000000000";
+									 PRIN_MEM_v(37) := "0000000000000000";
+									 PRIN_MEM_v(38) := "0000000000000000";
+									 PRIN_MEM_v(39) := "0000000000000000";
+									 PRIN_MEM_v(40) := "0000000000100000";
+									 PRIN_MEM_v(41) := "0000000000000000";
+									 PRIN_MEM_v(42) := "0000000000000000";
+									 PRIN_MEM_v(43) := "0000000000000000";
+									 PRIN_MEM_v(44) := "0000000000000000";
+									 PRIN_MEM_v(45) := "0000000000000000";
+									 PRIN_MEM_v(46) := "0000000000000000";
+									 PRIN_MEM_v(47) := "0000000000000000";
+									 PRIN_MEM_v(48) := "0000000000000000";
+									 PRIN_MEM_v(49) := "0000000000000000";
+									  
+								
 							 end if;	
 							
 							-- O controle de barramento funciona como a logica do 3state, evitando curto no barramento
@@ -320,6 +381,8 @@ output_process:
 							elsif(SC_v(3)  = '1') then
 								
 								BUS_ULA1_v := R1_v;
+							else
+								BUS_ULA1_v := x"0000";
 							
 							end if;
 							
@@ -341,6 +404,8 @@ output_process:
 							
 								BUS_ULA2_v := RDM_v;
 							
+							else
+								BUS_ULA2_v := x"0000";
 							end if;
 							
 							
@@ -464,6 +529,10 @@ output_process:
 								
 								BUS_INT1_v := "000000" & IR(15 downto 12);
 							
+							else
+							
+								BUS_INT1_v := "00" & x"00";
+							
 							end if;
 							
 							if (SC_v (23) = '1') then
@@ -526,29 +595,65 @@ output_process:
 			 ACC <= ACC_v;
 			
 			 -- signal auxiliar reset
-			 reset_all <= reset_all_v;
+			 --reset_all <= reset_all_v;
 	
 			 -- signal de controle principal
 			 SC <= SC_v;
-				
+
 			end process;
-										 
-			display_segs1 <= seg_nums(to_integer(unsigned(MPC)));
-			display_segs2 <= seg_nums(to_integer(unsignedx'(IR(15 downto 12))));
-			display_segs3 <= seg_nums(3);
-			display_segs4 <= seg_nums(4);
-			display_segs5 <= seg_nums(5);
-			display_segs6 <= seg_nums(6);
+			
+------------------------------------------------ DEBUG PROCESS ---
+			
+			process(clk)
+			-- debug das fases
+			variable debug_fase_v: integer range 1 to 5 :=  1;
+			begin
+				case current_fase is
+						when f_1 => debug_fase_v := 1;
+						when f_2 => debug_fase_v := 2;
+						when f_3 => debug_fase_v := 3;
+						when f_4 => debug_fase_v := 4;
+						when f_5 => debug_fase_v := 5;
+				end case;
+				
+				if		(debug1 = '0') then -- MPC
+				
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(0);
+						display_segs3 <= seg_nums(to_integer(unsigned(MPC(9 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(MPC(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(MPC(3  downto 0 ))));
+							
+				elsif (debug2 = '0') then -- RDM
 					
-																	
-  						
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(to_integer(unsigned(RDM(15 downto 12))));
+						display_segs3 <= seg_nums(to_integer(unsigned(RDM(11 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(RDM(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(RDM(3  downto 0 ))));
+
+				elsif (debug3 = '0') then -- IR
+
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(to_integer(unsigned(IR(15 downto 12))));
+						display_segs3 <= seg_nums(to_integer(unsigned(IR(11 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(IR(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(IR(3  downto 0 ))));
+				
+				else							  -- PC
+					
+						display_segs6 <= seg_nums(15);
+						display_segs5 <= seg_nums(debug_fase_v);
+						display_segs4 <= seg_nums(to_integer(unsigned(PC(15 downto 12))));
+						display_segs3 <= seg_nums(to_integer(unsigned(PC(11 downto 8 ))));
+						display_segs2 <= seg_nums(to_integer(unsigned(PC(7  downto 4 ))));
+						display_segs1 <= seg_nums(to_integer(unsigned(PC(3  downto 0 ))));
+
+				end if;
+			end process;			
+			
+---------------------------------------------------------------------  						
 end behavior;   
-
-
-
-
-
-						
-		
-			  
-		

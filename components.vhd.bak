@@ -1,0 +1,27 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+USE ieee.std_logic_arith.all;
+USE ieee.std_logic_unsigned.all;
+USE ieee.numeric_std.all;
+
+-------------------------------------
+
+PACKAGE my_package IS
+
+	component ha_1 is
+		port(a, b 		: in std_logic;
+			  sum, cout	: out std_logic);
+	end component;
+	
+	component inc4 is
+	  port(a3,a2,a1,a0, inc : in std_logic;
+			 y3,y2,y1,y0,cout : out std_logic);
+	end component;	
+
+	
+	component neg_not is
+		port(a3, a2, a1, a0, pass, negnot: in std_logic;
+			  y3, y2, y1, y0, cout			: out std_logic);
+	end component;	
+
+END my_package;
